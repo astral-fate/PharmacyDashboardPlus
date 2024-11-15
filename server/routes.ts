@@ -1,6 +1,6 @@
 import { Express } from "express";
-import { setupAuth } from "./auth";
-import { db } from "db";
+import { setupAuth } from "./auth.js";
+import { db } from "../db/index.js";
 import { 
   medicines, 
   pharmacies, 
@@ -8,12 +8,23 @@ import {
   users, 
   locations, 
   medicineCategories, 
-  customerSupport 
-} from "db/schema";
+  customerSupport,
+  type User
+} from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
 export function registerRoutes(app: Express) {
   setupAuth(app);
+
+  // Users endpoints
+  app.get("/api/users", async (req, res) => {
+    try {
+      const allUsers = await db.select().from(users);
+      res.json(allUsers.map((user: User) => ({ ...user, password: undefined })));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch users" });
+    }
+  });
 
   // Medicines endpoints
   app.get("/api/medicines", async (req, res) => {
@@ -139,16 +150,6 @@ export function registerRoutes(app: Express) {
       res.json(newInventory);
     } catch (error) {
       res.status(500).json({ error: "Failed to update inventory" });
-    }
-  });
-
-  // Users endpoints
-  app.get("/api/users", async (req, res) => {
-    try {
-      const allUsers = await db.select().from(users);
-      res.json(allUsers.map(user => ({ ...user, password: undefined })));
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch users" });
     }
   });
 }

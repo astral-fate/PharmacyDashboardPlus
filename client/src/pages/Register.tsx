@@ -1,11 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'wouter';
-import { useUser } from '@/hooks/use-user';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
-import { Link } from 'wouter';
+import { useLocation, Link } from 'wouter';
+import { useUser } from '../hooks/use-user';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { useToast } from '../hooks/use-toast';
 
 const Register = () => {
   const [, setLocation] = useLocation();

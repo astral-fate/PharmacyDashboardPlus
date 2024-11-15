@@ -5,8 +5,8 @@ import session from "express-session";
 import createMemoryStore from "memorystore";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
-import { users, insertUserSchema, type User as SelectUser } from "db/schema";
-import { db } from "db";
+import { users, insertUserSchema } from "../db/schema.js";
+import { db } from "../db/index.js";
 import { eq } from "drizzle-orm";
 
 const scryptAsync = promisify(scrypt);
@@ -28,10 +28,10 @@ const crypto = {
   },
 };
 
-// extend express user object with our schema
+// extend express user object with schema type
 declare global {
   namespace Express {
-    interface User extends SelectUser {}
+    interface User extends Omit<import("../db/schema.js").User, "password"> {}
   }
 }
 
@@ -51,6 +51,7 @@ export function setupAuth(app: Express) {
     app.set("trust proxy", 1);
     sessionSettings.cookie = {
       secure: true,
+      sameSite: 'none'
     };
   }
 
@@ -188,7 +189,13 @@ export function setupAuth(app: Express) {
 
   app.get("/api/user", (req, res) => {
     if (req.isAuthenticated()) {
-      return res.json(req.user);
+      const user = req.user;
+      return res.json({
+        id: user.id,
+        username: user.username,
+        role: user.role,
+        status: user.status
+      });
     }
     res.status(401).json({ message: "Unauthorized" });
   });

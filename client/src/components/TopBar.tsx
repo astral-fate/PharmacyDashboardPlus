@@ -1,13 +1,13 @@
 import React from 'react';
 import { Bell } from 'lucide-react';
-import { useUser } from '@/hooks/use-user';
+import { useUser } from '../hooks/use-user';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+} from "../components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
 
 const TopBar = () => {
   const { user, logout } = useUser();

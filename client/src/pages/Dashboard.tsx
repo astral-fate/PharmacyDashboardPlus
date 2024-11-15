@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidebar from '@/components/Sidebar';
-import TopBar from '@/components/TopBar';
-import { Card } from '@/components/ui/card';
+import Sidebar from '../components/Sidebar';
+import TopBar from '../components/TopBar';
+import { Card } from '../components/ui/card';
 import { 
   Pill, 
   Building2, 

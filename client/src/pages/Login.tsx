@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, Link } from 'wouter';
-import { useUser } from '@/hooks/use-user';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import { useUser } from '../hooks/use-user';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { useToast } from '../hooks/use-toast';
 
 const Login = () => {
   const [, setLocation] = useLocation();
